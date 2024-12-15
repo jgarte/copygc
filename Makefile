@@ -9,5 +9,11 @@ clean :
 	rm -f $(BIN) *~
 
 run : $(BIN)
+	./$(BIN)
+
+debug: $(BIN)
+	gdb ./$(BIN)
+
+valrun : $(BIN)
 	valgrind  --leak-check=yes ./$(BIN)
 
