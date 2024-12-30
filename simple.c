@@ -55,10 +55,4 @@ void test() {
   }
 }
 
-int main(int argc, char *argv[]) {
-  printf("sizeof(Object *): %zu\n", sizeof(Object *));
-  printf("sizeof(float): %zu\n", sizeof(float));
-  printf("sizeof(ObjectType): %zu\n", sizeof(ObjectType));
-  printf("sizeof(Object): %zu\n", sizeof(Object));
-  return 0;
-}
+int main(int argc, char *argv[]) { test(); }
