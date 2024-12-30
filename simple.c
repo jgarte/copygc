@@ -42,6 +42,7 @@ void printStack(Stack *s) {
   printf("fill_pointer: %zu", s->fill_pointer);
 
   for (int i = 0; i < STACK_LENGTH; i++) {
+    printf("index: %i\n", i);
     printObject(s->entries[i]);
   }
 };
