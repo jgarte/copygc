@@ -35,10 +35,24 @@ typedef struct Stack {
 Stack s;
 
 void test() {
-
-  float x = 3.0;
-  Object *o = malloc(sizeof(Object));
-  s.entries[0] = o;
+  {
+    float x = 3.0;
+    Object *o = malloc(sizeof(Object));
+    s.entries[0] = o;
+    s.fill_pointer = 1;
+  }
+  {
+    float x = 5.0;
+    Object *o = malloc(sizeof(Object));
+    s.entries[0] = o;
+    s.fill_pointer = 1;
+  }
+  {
+    float x = 1.0;
+    Object *o = malloc(sizeof(Object));
+    s.entries[0] = o;
+    s.fill_pointer = 1;
+  }
 }
 
 int main(int argc, char *argv[]) {
