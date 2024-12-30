@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef enum { FLOAT, PAIR } ObjectType;
 
@@ -16,7 +17,6 @@ typedef struct Object_S {
 // object_type: 4
 // 4 + 2*8 + 4 = 24
 
-
 #define STACK_LENGTH 45
 
 typedef struct Stack {
@@ -24,7 +24,6 @@ typedef struct Stack {
   int fill_pointer;
 } Stack;
 
-// #include <stdlib.h>
 // void junk() {
 //   Stack stack = {0}; // Initialize all fields to 0.
 //   Object *o = malloc(sizeof(Object));
@@ -33,7 +32,14 @@ typedef struct Stack {
 //   stack.entries[stack.fill_pointer] = o;
 // }
 
-// void test() { int x = 3; }
+Stack s;
+
+void test() {
+
+  float x = 3.0;
+  Object *o = malloc(sizeof(Object));
+  s.entries[0] = o;
+}
 
 int main(int argc, char *argv[]) {
   printf("sizeof(Object *): %zu\n", sizeof(Object *));
