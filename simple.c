@@ -17,7 +17,7 @@ typedef struct Object_S {
 // object_type: 4
 // 4 + 2*8 + 4 = 24
 
-#define STACK_LENGTH 45
+#define STACK_LENGTH 5
 
 typedef struct Stack {
   Object *entries[STACK_LENGTH];
@@ -32,10 +32,18 @@ typedef struct Stack {
 //   stack.entries[stack.fill_pointer] = o;
 // }
 
+void printObject(Object *o) {
+  printf("float_number: %f", o->value.float_number);
+}
+
 Stack s;
 
-void printStack(Stack *s) { 
-  printf("fill_pointer: %zu", s->fill_pointer); 
+void printStack(Stack *s) {
+  printf("fill_pointer: %zu", s->fill_pointer);
+
+  for (int i = 0; i < STACK_LENGTH; i++) {
+    printf("", s[i])
+  }
 };
 
 void test() {
