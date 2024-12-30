@@ -2,8 +2,8 @@ BIN=markandsweep
 
 .PHONY : clean 
 
-$(BIN) : main.c
-	$(CC) -fsanitize=undefined -ggdb -std=gnu99 -fno-strict-aliasing -Wall -Wextra main.c -o $(BIN)
+$(BIN) : simple.c
+	$(CC) -fsanitize=undefined -ggdb -std=gnu99 -fno-strict-aliasing -Wall -Wextra simple.c -o $(BIN)
 
 clean :
 	rm -f $(BIN) *~

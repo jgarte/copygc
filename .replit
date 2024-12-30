@@ -1,0 +1,10 @@
+compile = "make run"
+modules = ["c-clang14"]
+run = "./markandsweep"
+
+[deployment]
+build = ["sh", "-c", "make run"]
+run = ["sh", "-c", "./markandsweep"]
+
+[nix]
+channel = "stable-24_05"
