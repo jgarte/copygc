@@ -33,13 +33,13 @@ typedef struct Stack {
 // }
 
 void printObject(Object *o) {
-  printf("float_number: %f", o->value.float_number);
+  printf("float_number: %f\n", o->value.float_number);
 }
 
 Stack s;
 
 void printStack(Stack *s) {
-  printf("fill_pointer: %zu", s->fill_pointer);
+  printf("fill_pointer: %zu\n", s->fill_pointer);
 
   for (int i = 0; i < STACK_LENGTH; i++) {
     printf("index: %i\n", i);
@@ -55,13 +55,23 @@ void test() {
   }
   {
     Object *o = malloc(sizeof(Object));
-    s.entries[0] = o;
-    s.fill_pointer = 1;
+    s.entries[1] = o;
+    s.fill_pointer = 2;
   }
   {
     Object *o = malloc(sizeof(Object));
-    s.entries[0] = o;
-    s.fill_pointer = 1;
+    s.entries[2] = o;
+    s.fill_pointer = 3;
+  }
+  {
+    Object *o = malloc(sizeof(Object));
+    s.entries[3] = o;
+    s.fill_pointer = 4;
+  }
+  {
+    Object *o = malloc(sizeof(Object));
+    s.entries[4] = o;
+    s.fill_pointer = 4;
   }
   printStack(&s);
 }
