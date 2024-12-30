@@ -43,35 +43,40 @@ void printStack(Stack *s) {
 
   for (int i = 0; i < STACK_LENGTH; i++) {
     printf("index: %i\n", i);
-    printObject(s->entries[i]);
+    Object *o = s->entries[i];
+    if (o == NULL) {
+      printf("Object is NULL!\n");
+    } else {
+      printObject(s->entries[i]);
+    }
   }
 };
 
 void test() {
+  int current_index = 0;
   {
     Object *o = malloc(sizeof(Object));
-    s.entries[0] = o;
-    s.fill_pointer = 1;
+    s.entries[current_index] = o;
+    s.fill_pointer = current_index + 1;
+    current_index += 1;
   }
   {
     Object *o = malloc(sizeof(Object));
-    s.entries[1] = o;
-    s.fill_pointer = 2;
+    s.entries[current_index] = o;
+    s.fill_pointer = current_index + 1;
+    current_index += 1;
   }
   {
     Object *o = malloc(sizeof(Object));
-    s.entries[2] = o;
-    s.fill_pointer = 3;
+    s.entries[current_index] = o;
+    s.fill_pointer = current_index + 1;
+    current_index += 1;
   }
   {
     Object *o = malloc(sizeof(Object));
-    s.entries[3] = o;
-    s.fill_pointer = 4;
-  }
-  {
-    Object *o = malloc(sizeof(Object));
-    s.entries[4] = o;
-    s.fill_pointer = 4;
+    s.entries[current_index] = o;
+    s.fill_pointer = current_index + 1;
+    current_index += 1;
   }
   printStack(&s);
 }
