@@ -21,7 +21,7 @@ typedef struct Object_S {
 
 typedef struct Stack {
   Object *entries[STACK_LENGTH];
-  int fill_pointer;
+  size_t fill_pointer;
 } Stack;
 
 // void junk() {
@@ -34,25 +34,27 @@ typedef struct Stack {
 
 Stack s;
 
+void printStack(Stack *s) { 
+  printf("fill_pointer: %zu", s->fill_pointer); 
+};
+
 void test() {
   {
-    float x = 3.0;
     Object *o = malloc(sizeof(Object));
     s.entries[0] = o;
     s.fill_pointer = 1;
   }
   {
-    float x = 5.0;
     Object *o = malloc(sizeof(Object));
     s.entries[0] = o;
     s.fill_pointer = 1;
   }
   {
-    float x = 1.0;
     Object *o = malloc(sizeof(Object));
     s.entries[0] = o;
     s.fill_pointer = 1;
   }
+  printStack(&s);
 }
 
 int main() { test(); }
