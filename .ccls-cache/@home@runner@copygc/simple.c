@@ -11,6 +11,12 @@ typedef struct Object_S {
   ObjectType object_type;
 } Object;
 
+// float_number: 4
+// pair: 2*8
+// object_type: 4
+// 4 + 2*8 + 4 = 24
+
+
 #define STACK_LENGTH 45
 
 typedef struct Stack {
