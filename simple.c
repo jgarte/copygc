@@ -68,10 +68,11 @@ void setFloat(Object *o, float f) {
   o->value.float_number = f;
 }
 
+Object *stackPop(Stack *s) { return s->entries[--s->fill_pointer]; }
+
 void stackPush(Stack *s, Object *o) {
   // Push the object on the stack.
-  s->entries[s->fill_pointer] = o;
-  s->fill_pointer += 1;
+  s->entries[s->fill_pointer++] = o;
 }
 
 void test() {
@@ -81,9 +82,24 @@ void test() {
     setFloat(o, 6.0);
     stackPush(&g_s, o);
   }
+  {
+    Object *o = allocateObject();
+    setFloat(o, 3.0);
+    stackPush(&g_s, o);
+  }
+  {
+    Object *o = allocateObject();
+    setFloat(o, 4.0);
+    stackPush(&g_s, o);
+  }
+  {
+    // Pop the top element of the stack and print it.
+    Object *o = stackPop(&g_s);
+    printf("top of stack: %f\n", o->value.float_number);
+  }
   printStack(&g_s);
 
-  stackFree(&g_s);
+  // stackFree(&g_s);
 }
 
 int main() { test(); }
