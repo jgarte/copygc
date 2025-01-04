@@ -42,6 +42,7 @@ Stack g_s;
 // Print every element of the stack, including portions of the stack that have
 // not yet been filled.
 void printStack(Stack *s) {
+  puts("");
   printf("fill_pointer: %zu\n", s->fill_pointer);
 
   for (int i = 0; i < STACK_LENGTH; i++) {
@@ -53,6 +54,7 @@ void printStack(Stack *s) {
       printObject(s->entries[i]);
     }
   }
+  puts("");
 };
 
 void stackInit(Stack *s) { s->fill_pointer = 0; }
@@ -95,7 +97,13 @@ void test() {
   {
     // Pop the top element of the stack and print it.
     Object *o = stackPop(&g_s);
-    printf("top of stack: %f\n", o->value.float_number);
+    printf("popped: %f\n", o->value.float_number);
+    free(o);
+  }
+  {
+    Object *o = allocateObject();
+    setFloat(o, -3.0);
+    stackPush(&g_s, o);
   }
   printStack(&g_s);
 
