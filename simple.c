@@ -58,7 +58,7 @@ void printStack(Stack *s) {
 void stackInit(Stack *s) { s->fill_pointer = 0; }
 
 void stackPush(ObjectType object_type, float value) {
-   // Allocate the object.
+  // Allocate the object.
   Object *o = malloc(sizeof(Object));
   // Initialize the object.
   o->object_type = object_type;
@@ -81,7 +81,7 @@ void test() {
   }
   printStack(&g_s);
 
-//  stack_free(&g_s);
+  //  stack_free(&g_s);
   drop(&g_s);
   shared_ptr<Object> o = allocateObject();
 
@@ -99,6 +99,10 @@ void test() {
   a.neighbors = arena_alloc(triangleArena))
   b.neighbors = arena_alloc(triangleArena))
   delete triangleArena
+
+  // alternatively, if you don't use an arena...
+  dolist triangle in triangles:
+    free(triangle.neighbors)
 }
 
 int main() { test(); }
