@@ -21,6 +21,7 @@ typedef struct Object_S {
 
 typedef struct Stack {
   Object *entries[STACK_LENGTH];
+  // The next index available to fill.
   size_t fill_pointer;
 } Stack;
 
@@ -36,8 +37,10 @@ void printObject(Object *o) {
   printf("float_number: %f\n", o->value.float_number);
 }
 
-Stack s;
+Stack g_s;
 
+// Print every element of the stack, including portions of the stack that have
+// not yet been filled.
 void printStack(Stack *s) {
   printf("fill_pointer: %zu\n", s->fill_pointer);
 
@@ -53,32 +56,15 @@ void printStack(Stack *s) {
 };
 
 void test() {
-  int current_index = 0;
+  g_s.fill_pointer = 0;
   {
     Object *o = malloc(sizeof(Object));
-    s.entries[current_index] = o;
-    s.fill_pointer = current_index + 1;
-    current_index += 1;
+    g_s.entries[g_s.fill_pointer] = o;
+    g_s.entries[g_s.fill_pointer]->object_type = FLOAT;
+    g_s.entries[g_s.fill_pointer]->value.float_number = 6.0;
+    g_s.fill_pointer += 1;
   }
-  {
-    Object *o = malloc(sizeof(Object));
-    s.entries[current_index] = o;
-    s.fill_pointer = current_index + 1;
-    current_index += 1;
-  }
-  {
-    Object *o = malloc(sizeof(Object));
-    s.entries[current_index] = o;
-    s.fill_pointer = current_index + 1;
-    current_index += 1;
-  }
-  {
-    Object *o = malloc(sizeof(Object));
-    s.entries[current_index] = o;
-    s.fill_pointer = current_index + 1;
-    current_index += 1;
-  }
-  printStack(&s);
+  printStack(&g_s);
 }
 
 int main() { test(); }
