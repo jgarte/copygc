@@ -58,10 +58,13 @@ void printStack(Stack *s) {
 void test() {
   g_s.fill_pointer = 0;
   {
+    // Allocate the object.
     Object *o = malloc(sizeof(Object));
+    // Initialize the object.
+    o->object_type = FLOAT;
+    o->value.float_number = 6.0;
+    // Push the object on the stack.
     g_s.entries[g_s.fill_pointer] = o;
-    g_s.entries[g_s.fill_pointer]->object_type = FLOAT;
-    g_s.entries[g_s.fill_pointer]->value.float_number = 6.0;
     g_s.fill_pointer += 1;
   }
   printStack(&g_s);
