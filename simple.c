@@ -55,8 +55,10 @@ void printStack(Stack *s) {
   }
 };
 
+void stackInit(Stack *s) { s->fill_pointer = 0; }
+
 void test() {
-  g_s.fill_pointer = 0;
+  stackInit(&g_s);
   {
     // Allocate the object.
     Object *o = malloc(sizeof(Object));
