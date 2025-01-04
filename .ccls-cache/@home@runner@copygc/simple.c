@@ -90,6 +90,12 @@ void test() {
       x[0] = x
   f()
 
+  a = Triangle()
+  b = Triangle()
+  a.neighbors = [b]
+  b.neighbors = [a]
+
+  triangleArena = Arena()
   
 }
 
