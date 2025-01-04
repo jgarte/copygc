@@ -96,7 +96,9 @@ void test() {
   b.neighbors = [a]
 
   triangleArena = Arena()
-  
+  a.neighbors = arena_alloc(triangleArena))
+  b.neighbors = arena_alloc(triangleArena))
+  delete triangleArena
 }
 
 int main() { test(); }
