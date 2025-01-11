@@ -119,7 +119,13 @@ void test() {
     setFloat(o, -3.0);
     stackPush(&g_s, o);
   }
-  printStack(&g_s);
+  {
+    // Pop the top element of the stack and print it.
+    Object *o = stackPop(&g_s);
+    printf("popped: %f\n", o->value.float_number);
+    free(o);
+  }
+  /* printStack(&g_s); */
 
   // stackFree(&g_s);
 }
