@@ -70,7 +70,12 @@ void setFloat(Object *o, float f) {
   o->value.float_number = f;
 }
 
-Object *stackPop(Stack *s) { return s->entries[--s->fill_pointer]; }
+Object *stackPop(Stack *s) {
+  --s->fill_pointer;
+  Object *o = s->entries[s->fill_pointer];
+  s->entries[s->fill_pointer] = NULL;
+  return o;
+}
 
 void stackPush(Stack *s, Object *o) {
   // Push the object on the stack.
