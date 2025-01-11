@@ -85,10 +85,24 @@ void test() {
     stackPush(&g_s, o);
   }
   {
+    // Pop the top element of the stack and print it.
+    Object *o = stackPop(&g_s);
+    printf("popped: %f\n", o->value.float_number);
+    free(o);
+  }
+
+  {
     Object *o = allocateObject();
     setFloat(o, 3.0);
     stackPush(&g_s, o);
   }
+  {
+    // Pop the top element of the stack and print it.
+    Object *o = stackPop(&g_s);
+    printf("popped: %f\n", o->value.float_number);
+    free(o);
+  }
+
   {
     Object *o = allocateObject();
     setFloat(o, 4.0);

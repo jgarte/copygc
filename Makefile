@@ -1,9 +1,12 @@
-BIN=markandsweep
+CC=clang
+BIN=simple
+SANITIZERS=-fsanitize=address -fno-strict-aliasing
+CFLAGS=-Wall -Wextra -std=c99 -fno-omit-frame-pointer -g -O0
 
-.PHONY : clean 
+.PHONY : clean
 
 $(BIN) : simple.c
-	$(CC) -fsanitize=address -ggdb -std=gnu99 -fno-strict-aliasing -Wall -Wextra simple.c -o $(BIN)
+	$(CC) $(CFLAGS) simple.c -o $(BIN)
 
 clean :
 	rm -f $(BIN) *~
@@ -15,5 +18,4 @@ debug: $(BIN)
 	gdb ./$(BIN)
 
 valrun : $(BIN)
-	valgrind  --leak-check=yes ./$(BIN)
-
+	valgrind --fullpath-after= --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(BIN)
