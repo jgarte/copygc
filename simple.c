@@ -70,11 +70,16 @@ void setFloat(Object *o, float f) {
   o->value.float_number = f;
 }
 
+// What happens when fill_pointer is 0?
 Object *stackPop(Stack *s) {
-  --s->fill_pointer;
-  Object *o = s->entries[s->fill_pointer];
-  s->entries[s->fill_pointer] = NULL;
-  return o;
+  if (s->fill_pointer == 0) {
+    return NULL;
+  } else {
+    --s->fill_pointer;
+    Object *o = s->entries[s->fill_pointer];
+    s->entries[s->fill_pointer] = NULL;
+    return o;
+  }
 }
 
 void stackPush(Stack *s, Object *o) {
@@ -90,23 +95,9 @@ void test() {
     stackPush(&g_s, o);
   }
   {
-    // Pop the top element of the stack and print it.
-    Object *o = stackPop(&g_s);
-    printf("popped: %f\n", o->value.float_number);
-    free(o);
-  }
-
-  {
     Object *o = allocateObject();
     setFloat(o, 3.0);
     stackPush(&g_s, o);
-  }
-  printStack(&g_s);
-  {
-    // Pop the top element of the stack and print it.
-    Object *o = stackPop(&g_s);
-    printf("popped: %f\n", o->value.float_number);
-    free(o);
   }
   printStack(&g_s);
   {
@@ -134,6 +125,7 @@ void test() {
     free(o);
   }
 
+  // TODO: For loop that deallocates the remaining elements.
   // stackFree(&g_s);
 }
 
