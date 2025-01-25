@@ -1,6 +1,12 @@
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+// Like puts but without the newline added.
+void put(char* s) {
+    fputs(s, stdout);
+}
 
 typedef enum { FLOAT, PAIR } ObjectType;
 
@@ -82,48 +88,38 @@ Object *stackPop(Stack *s) {
   }
 }
 
-void stackPush(Stack *s, Object *o) {
+bool stackPush(Stack *s, Object *o) {
   // Push the object on the stack.
-  s->entries[s->fill_pointer++] = o;
+  if (s->fill_pointer >= STACK_LENGTH) {
+    return false;
+  } else {
+    s->entries[s->fill_pointer++] = o;
+    return true;
+  }
+}
+
+void test_helper(float f) {
+  Object *o = allocateObject();
+  setFloat(o, f);
+  if (stackPush(&g_s, o)) {
+    puts("Success");
+  } else {
+    puts("There was an error");
+  }
 }
 
 void test() {
   stackInit(&g_s);
-  {
-    Object *o = allocateObject();
-    setFloat(o, 6.0);
-    stackPush(&g_s, o);
+  for (int i = 1; i <= STACK_LENGTH + 1; i++) {
+    test_helper(i);
+    printStack(&g_s);
   }
-  {
-    Object *o = allocateObject();
-    setFloat(o, 3.0);
-    stackPush(&g_s, o);
-  }
-  printStack(&g_s);
-  {
-    Object *o = allocateObject();
-    setFloat(o, 4.0);
-    stackPush(&g_s, o);
-  }
-  printStack(&g_s);
-  {
-    // Pop the top element of the stack and print it.
-    Object *o = stackPop(&g_s);
-    printf("popped: %f\n", o->value.float_number);
-    free(o);
-  }
-  {
-    Object *o = allocateObject();
-    setFloat(o, -3.0);
-    stackPush(&g_s, o);
-  }
-  printStack(&g_s);
-  {
-    // Pop the top element of the stack and print it.
-    Object *o = stackPop(&g_s);
-    printf("popped: %f\n", o->value.float_number);
-    free(o);
-  }
+  //{
+  //  // Pop the top element of the stack and print it.
+  //  Object *o = stackPop(&g_s);
+  //  printf("popped: %f\n", o->value.float_number);
+  //  free(o);
+  //}
 
   // TODO: For loop that deallocates the remaining elements.
   // stackFree(&g_s);
