@@ -4,9 +4,7 @@
 #include <stdlib.h>
 
 // Like puts but without the newline added.
-void put(char* s) {
-    fputs(s, stdout);
-}
+void put(char *s) { fputs(s, stdout); }
 
 typedef enum { FLOAT, PAIR } ObjectType;
 
@@ -108,12 +106,32 @@ void test_helper(float f) {
   }
 }
 
-void test() {
-  stackInit(&g_s);
-  for (int i = 1; i <= STACK_LENGTH + 1; i++) {
-    test_helper(i);
-    printStack(&g_s);
+typedef enum { Opcode_NOOP, Opcode_EXIT, Opcode_ADD } Opcode;
+
+typedef uint8_t u8;
+
+void single_step(bool *running, u8 *byte_code, u8 *instruction_counter) {
+    u8 opcode = byte_code[*instruction_counter];
+    ++instruction_counter;
+    switch (opcode) {
+    case Opcode_NOOP:
+        break;
+    case Opcode_EXIT:
+        *running = false;
+        break;
+    case Opcode_ADD:
+        break;
+    }
+}
+
+void vm() {
+  bool running = true;
+  u8 instruction_counter = 0;
+  u8 byte_code[] = {Opcode_NOOP, Opcode_EXIT};
+  while (running) {
+      single_step(&running, byte_code, &instruction_counter);
   }
+
   //{
   //  // Pop the top element of the stack and print it.
   //  Object *o = stackPop(&g_s);
@@ -125,4 +143,4 @@ void test() {
   // stackFree(&g_s);
 }
 
-int main() { test(); }
+int main() { vm(); }
