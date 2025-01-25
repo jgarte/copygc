@@ -111,10 +111,12 @@ typedef enum { Opcode_NOOP, Opcode_EXIT, Opcode_ADD } Opcode;
 typedef uint8_t u8;
 
 void single_step(bool *running, u8 *byte_code, u8 *instruction_counter) {
+    u8 opcode = byte_code[*instruction_counter];
     printf("%p\n", instruction_counter);
     printf("%u\n", *instruction_counter);
-    u8 opcode = byte_code[*instruction_counter];
     ++instruction_counter;
+    printf("%p\n", instruction_counter);
+    printf("%u\n", *instruction_counter);
     switch (opcode) {
     case Opcode_NOOP:
         puts("NOOP");
