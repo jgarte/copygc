@@ -111,15 +111,20 @@ typedef enum { Opcode_NOOP, Opcode_EXIT, Opcode_ADD } Opcode;
 typedef uint8_t u8;
 
 void single_step(bool *running, u8 *byte_code, u8 *instruction_counter) {
+    printf("%p\n", instruction_counter);
+    printf("%u\n", *instruction_counter);
     u8 opcode = byte_code[*instruction_counter];
     ++instruction_counter;
     switch (opcode) {
     case Opcode_NOOP:
+        puts("NOOP");
         break;
     case Opcode_EXIT:
+        puts("EXIT");
         *running = false;
         break;
     case Opcode_ADD:
+        puts("ADD");
         break;
     }
 }
@@ -131,16 +136,6 @@ void vm() {
   while (running) {
       single_step(&running, byte_code, &instruction_counter);
   }
-
-  //{
-  //  // Pop the top element of the stack and print it.
-  //  Object *o = stackPop(&g_s);
-  //  printf("popped: %f\n", o->value.float_number);
-  //  free(o);
-  //}
-
-  // TODO: For loop that deallocates the remaining elements.
-  // stackFree(&g_s);
 }
 
 int main() { vm(); }
