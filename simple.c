@@ -115,14 +115,19 @@ typedef enum {
   Opcode_PRINT
 } Opcode;
 
-void instruction_push_float(int number) {
+typedef uint8_t u8;
+
+u8 read_argument(u8 *byte_code, u8 *instruction_counter) {
+  return byte_code[(*instruction_counter)++];
+}
+
+void instruction_push_float(u8 *byte_code, u8 *instruction_counter) {
   Object *o = allocateObject();
+  u8 number = read_argument(byte_code, instruction_counter);
   float f = number;
   setFloat(o, f);
   stackPush(&g_s, o);
 }
-
-typedef uint8_t u8;
 
 void single_step(bool *running, u8 *byte_code, u8 *instruction_counter) {
   u8 opcode = byte_code[*instruction_counter];
@@ -136,8 +141,7 @@ void single_step(bool *running, u8 *byte_code, u8 *instruction_counter) {
   case Opcode_ADD:
     break;
   case Opcode_PUSH: {
-    int number = byte_code[(*instruction_counter)++];
-    instruction_push_float(number);
+    instruction_push_float(byte_code, instruction_counter);
   }
   }
 }
