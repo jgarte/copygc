@@ -77,10 +77,6 @@ int canvas_right(Canvas *canvas) {
 
 int canvas_setColor(Canvas *canvas, int color) {
 	if (color > 0xFFFFFF || color < 0) return 1;
-	int r = (color & 0xFF0000) >> 8*2;
-	int g = (color & 0x00FF00) >> 8*1;
-	int b = (color & 0x0000FF) >> 8*0;
-	if (r < 0 || g < 0 || b < 0 || r > 255 || g > 255 || b > 255) return 1;
 	canvas->cursor.color = color;
 	return 0;
 }
