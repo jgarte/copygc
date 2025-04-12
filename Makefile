@@ -5,8 +5,8 @@ CFLAGS=-Wall -Wextra -std=c99 -fno-omit-frame-pointer -g -O0
 
 .PHONY : clean
 
-$(BIN) : simple.c
-	$(CC) $(CFLAGS) simple.c -o $(BIN)
+$(BIN) : simple.c canvas.c
+	$(CC) $(CFLAGS) simple.c canvas.c -lSDL3 -o $(BIN)
 
 clean :
 	rm -f $(BIN) *~
