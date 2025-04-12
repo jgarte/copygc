@@ -28,6 +28,9 @@ void canvas_init(Canvas *canvas, int canvas_size, int window_size) {
 	}
 	canvas->canvas_size = canvas_size;
 	canvas->window_size = window_size;
+    canvas->cursor.color = 0xFF00FF;
+    canvas->cursor.x = 0;
+    canvas->cursor.y = 0;
 
 	initialized = 1;
 }
