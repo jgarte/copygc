@@ -115,6 +115,13 @@ typedef enum {
   Opcode_PRINT
 } Opcode;
 
+void instruction_push_float(int number) {
+  Object *o = allocateObject();
+  float f = number;
+  setFloat(o, f);
+  stackPush(&g_s, o);
+}
+
 typedef uint8_t u8;
 
 void single_step(bool *running, u8 *byte_code, u8 *instruction_counter) {
@@ -129,11 +136,8 @@ void single_step(bool *running, u8 *byte_code, u8 *instruction_counter) {
   case Opcode_ADD:
     break;
   case Opcode_PUSH: {
-    Object *o = allocateObject();
-    int i = 3;
-    float f = i;
-    setFloat(o, f);
-    stackPush(&g_s, o);
+    int number = byte_code[(*instruction_counter)++];
+    instruction_push_float(number);
   }
   }
 }
@@ -147,8 +151,8 @@ void stackFree(Stack *s) {
 void vm() {
   bool running = true;
   u8 instruction_counter = 0;
-  u8 byte_code[] = {Opcode_PUSH, Opcode_PUSH, Opcode_PUSH, Opcode_PUSH,
-                    Opcode_EXIT};
+  u8 byte_code[] = {Opcode_PUSH, 1, Opcode_PUSH, 2, Opcode_PUSH, 3,
+                    Opcode_PUSH, 4, Opcode_EXIT};
   while (running) {
     single_step(&running, byte_code, &instruction_counter);
   }
