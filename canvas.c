@@ -7,6 +7,8 @@ bool initialized = 0;
 void canvas_init(Canvas *canvas, int canvas_size, int window_size) {
 	if (initialized) return;
 
+    window_size = canvas_size * (window_size / canvas_size);
+
 	{
 		bool e = SDL_Init(SDL_INIT_VIDEO);
 		if (!e) {
