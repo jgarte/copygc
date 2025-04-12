@@ -106,34 +106,46 @@ void test_helper(float f) {
   }
 }
 
-typedef enum { Opcode_NOOP, Opcode_EXIT, Opcode_ADD } Opcode;
+typedef enum {
+  Opcode_NOOP,
+  Opcode_EXIT,
+  Opcode_ADD,
+  Opcode_PUSH,
+  Opcode_POP,
+  Opcode_PRINT
+} Opcode;
 
 typedef uint8_t u8;
 
 void single_step(bool *running, u8 *byte_code, u8 *instruction_counter) {
-    u8 opcode = byte_code[*instruction_counter];
-    ++(*instruction_counter);
-    switch (opcode) {
-    case Opcode_NOOP:
-        puts("NOOP");
-        break;
-    case Opcode_EXIT:
-        puts("EXIT");
-        *running = false;
-        break;
-    case Opcode_ADD:
-        puts("ADD");
-        break;
-    }
+  u8 opcode = byte_code[*instruction_counter];
+  ++(*instruction_counter);
+  switch (opcode) {
+  case Opcode_NOOP:
+    break;
+  case Opcode_EXIT:
+    *running = false;
+    break;
+  case Opcode_ADD:
+    break;
+  case Opcode_PUSH: {
+    Object *o = allocateObject();
+    int i = 3;
+    float f = i;
+    setFloat(o, f);
+    stackPush(&g_s, o);
+  }
+  }
 }
 
 void vm() {
   bool running = true;
   u8 instruction_counter = 0;
-  u8 byte_code[] = {Opcode_NOOP, Opcode_EXIT};
+  u8 byte_code[] = {Opcode_PUSH, Opcode_EXIT};
   while (running) {
-      single_step(&running, byte_code, &instruction_counter);
+    single_step(&running, byte_code, &instruction_counter);
   }
+  printStack(&g_s);
 }
 
 int main() { vm(); }
