@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "canvas.h"
-
 // Like puts but without the newline added.
 void put(char *s) { fputs(s, stdout); }
 
@@ -133,9 +131,7 @@ void instruction_push_float(u8 *byte_code, u8 *instruction_counter) {
 
 void instruction_pop(void) { stackPop(&g_s); }
 
-void single_step(bool *running, u8 *byte_code, u8 *instruction_counter,
-                 Canvas *canvas) {
-  (void)canvas;
+void single_step(bool *running, u8 *byte_code, u8 *instruction_counter) {
   u8 opcode = byte_code[*instruction_counter];
   ++(*instruction_counter);
   switch (opcode) {
@@ -163,31 +159,16 @@ void stackFree(Stack *s) {
   }
 }
 
-void vm(Canvas *canvas) {
+void vm() {
   bool running = true;
   u8 instruction_counter = 0;
   u8 byte_code[] = {Opcode_PUSH, 1, Opcode_PUSH, 2, Opcode_PUSH, 3,
-                    Opcode_PUSH, 4, Opcode_EXIT};
+                    Opcode_PUSH, 4, Opcode_POP, Opcode_EXIT};
   while (running) {
-    single_step(&running, byte_code, &instruction_counter, canvas);
-    /* canvas_render(canvas); */
+    single_step(&running, byte_code, &instruction_counter);
   }
   printStack(&g_s);
   stackFree(&g_s);
 }
 
-int main() {
-  Canvas canvas;
-  /* canvas_init(&canvas, 16, 600); */
-
-  vm(&canvas);
-
-  /* while (1) { */
-  /*   SDL_Event event; */
-  /*   SDL_PollEvent(&event); */
-  /*   if (event.type == SDL_EVENT_QUIT) break; */
-  /*   canvas_render(&canvas); */
-  /* } */
-
-  /* canvas_quit(&canvas); */
-}
+int main() { vm(); }
