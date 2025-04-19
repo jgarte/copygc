@@ -98,15 +98,6 @@ bool stackPush(Stack *s, Object *o) {
   }
 }
 
-bool stackPop(Stack *s) {
-  if (s->fill_pointer < 0) {
-    return false;
-  }
-  s->entries[s->fill_pointer] = NULL;
-  --s->fill_pointer;
-  return true;
-}
-
 void test_helper(float f) {
   Object *o = allocateObject();
   setFloat(o, f);
@@ -140,6 +131,8 @@ void instruction_push_float(u8 *byte_code, u8 *instruction_counter) {
   stackPush(&g_s, o);
 }
 
+void instruction_pop(void) { stackPop(&g_s); }
+
 void single_step(bool *running, u8 *byte_code, u8 *instruction_counter,
                  Canvas *canvas) {
   (void)canvas;
@@ -155,6 +148,11 @@ void single_step(bool *running, u8 *byte_code, u8 *instruction_counter,
     break;
   case Opcode_PUSH: {
     instruction_push_float(byte_code, instruction_counter);
+    break;
+  }
+  case Opcode_POP: {
+    instruction_pop();
+    break;
   }
   }
 }
